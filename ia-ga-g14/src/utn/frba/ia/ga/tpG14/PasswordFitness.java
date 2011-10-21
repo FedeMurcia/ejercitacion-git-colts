@@ -27,6 +27,10 @@ public class PasswordFitness implements FitnessEvaluationAlgorithm {
 		this.reglas = Arrays.asList(reglas);
 	}
 
+	public PasswordFitness(List<Regla> reglas) {
+		this.reglas = reglas;
+	}
+
 	@Override
 	public Class<?> getApplicableClass() {
 		return StringIndividual.class;

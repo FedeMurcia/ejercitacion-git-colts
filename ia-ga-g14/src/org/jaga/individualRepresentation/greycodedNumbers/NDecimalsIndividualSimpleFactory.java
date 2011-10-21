@@ -226,4 +226,9 @@ public class NDecimalsIndividualSimpleFactory implements IndividualsFactory {
 							  Math.min(constr.getMaxValue(), veryLargePositive)};
 	}
 
+	@Override
+	public boolean valid(Individual individual) {
+		return true;
+	}
+
 }

@@ -95,7 +95,7 @@ public class SimpleBinaryXOver extends XOver {
 			}
 
 			// create children and check if children are valid:
-			NDecimalsIndividual [] kids = createKidsFromEncoding(params, c1, c2);
+			BinaryEncodedIndividual [] kids = createKidsFromEncoding(params, c1, c2);
 			kidsAreValid = kidsSatisfyConstraints(kids, params);
 
 			// return valid kids or have another attempts:
@@ -145,19 +145,19 @@ public class SimpleBinaryXOver extends XOver {
 		return bitLen;
 	}
 
-	private boolean kidsSatisfyConstraints(NDecimalsIndividual[] kids, GAParameterSet params) {
-		NDecimalsIndividualSimpleFactory fact = (NDecimalsIndividualSimpleFactory) params.getIndividualsFactory();
+	private boolean kidsSatisfyConstraints(BinaryEncodedIndividual[] kids, GAParameterSet params) {
+		IndividualsFactory fact = params.getIndividualsFactory();
 		for (int i = 0; i < kids.length; i++)
 			if (!fact.valid(kids[i]))
 				return false;
 		return true;
 	}
 
-	private NDecimalsIndividual [] createKidsFromEncoding(GAParameterSet params, BitString c1, BitString c2) {
-		NDecimalsIndividual [] kids = new NDecimalsIndividual[getRequiredNumberOfParents()];
-		kids[0] = (NDecimalsIndividual)
+	private BinaryEncodedIndividual [] createKidsFromEncoding(GAParameterSet params, BitString c1, BitString c2) {
+		BinaryEncodedIndividual [] kids = new BinaryEncodedIndividual[getRequiredNumberOfParents()];
+		kids[0] = (BinaryEncodedIndividual)
 					 params.getIndividualsFactory().createSpecificIndividual(c1, params);
-		kids[1] = (NDecimalsIndividual)
+		kids[1] = (BinaryEncodedIndividual)
 					 params.getIndividualsFactory().createSpecificIndividual(c2, params);
 		return kids;
 	}
