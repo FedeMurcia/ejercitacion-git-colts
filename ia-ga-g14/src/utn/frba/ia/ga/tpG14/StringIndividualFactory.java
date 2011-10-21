@@ -7,6 +7,8 @@ import javax.swing.text.html.*;
 import org.jaga.definitions.GAParameterSet;
 import org.jaga.definitions.Individual;
 import org.jaga.definitions.IndividualsFactory;
+import org.jaga.individualRepresentation.greycodedNumbers.*;
+import org.jaga.util.*;
 
 public class StringIndividualFactory implements IndividualsFactory {
 
@@ -14,7 +16,7 @@ public class StringIndividualFactory implements IndividualsFactory {
 
     private int stringLength;
     private int minCodePoint;
-    private int maxCodePoint; 
+    private int maxCodePoint;
 
     /**
      * Construye una factory que genera strings del tama�o indicado en el
@@ -33,7 +35,6 @@ public class StringIndividualFactory implements IndividualsFactory {
 	this.setMinCodePoint(minCodePoint);
 	this.setMaxCodePoint(maxCodePoint);
     }
-
 
     @Override
     public Individual createDefaultIndividual(GAParameterSet params) {
@@ -58,15 +59,32 @@ public class StringIndividualFactory implements IndividualsFactory {
     }
 
     private char proximoCaracterRandom(GAParameterSet params) {
-	// TODO ¿Radix re inválido?
-	return Character.forDigit(params.getRandomGenerator().nextInt(minCodePoint, maxCodePoint), 10);
+	return (char) params.getRandomGenerator().nextInt(minCodePoint, maxCodePoint);
     }
 
     @Override
     public Individual createSpecificIndividual(Object init, GAParameterSet params) throws NullPointerException,
 	    ClassCastException {
-	// TODO Auto-generated method stub
-	return null;
+	if (null == init)
+	    throw new NullPointerException("Initialisation value for StringIndividual may not be null");
+
+	if (init instanceof StringIndividual)
+	    return createSpecificIndividual((StringIndividual) init);
+
+	if (init instanceof String)
+	    return createSpecificIndividual((String) init);
+
+	throw new ClassCastException("Initialisation value for StringIndividual "
+		+ "must be of type StringIndividual or String (but is " + init.getClass() + ")");
+
+    }
+
+    private Individual createSpecificIndividual(String init) {
+	return new StringIndividual(init);
+    }
+
+    private Individual createSpecificIndividual(StringIndividual init) {
+	return new StringIndividual(init.getString());
     }
 
     public void setMinCodePoint(int minCodePoint) {
