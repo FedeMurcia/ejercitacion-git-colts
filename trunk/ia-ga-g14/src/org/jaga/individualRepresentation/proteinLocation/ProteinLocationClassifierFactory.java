@@ -243,4 +243,9 @@ public class ProteinLocationClassifierFactory implements IndividualsFactory {
 		this.classifierName = classifierName;
 	}
 
+	@Override
+	public boolean valid(Individual individual) {
+		return true;
+	}
+
 }

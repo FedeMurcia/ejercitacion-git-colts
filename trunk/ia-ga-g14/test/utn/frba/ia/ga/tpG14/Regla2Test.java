@@ -17,12 +17,15 @@ public class Regla2Test {
 		assertTrue(regla2.evaluar("123456789123") == 0);
 		assertTrue(regla2.evaluar("ABCDEFGHIJKL") == 0);
 		
-		assertFalse(regla2.evaluar("@bc123ABC123") == 0);
+		assertTrue(regla2.evaluar("@bc123ABC123") == FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO);
 		assertFalse(regla2.evaluar("bc123ABC123") == 0);
 		assertFalse(regla2.evaluar("aabc123ABC123") == 0);
 		assertFalse(regla2.evaluar("-bc123ABC123") == 0);
 		assertFalse(regla2.evaluar("?bc123ABC123") == 0);
 		assertFalse(regla2.evaluar("") == 0);
+		assertTrue(regla2.evaluar("ñ") == FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO);
+		assertTrue(regla2.evaluar("ój#ùåÛÇ{±") == FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO);
+		assertTrue(regla2.evaluar("±") == FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO);
 	}
 
 }

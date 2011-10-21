@@ -6,6 +6,8 @@ import org.jaga.util.*;
 import org.jaga.individualRepresentation.greycodedNumbers.*;
 import org.jaga.reproduction.*;
 
+import utn.frba.ia.ga.tpG14.StringIndividualFactory;
+
 /**
  * TODO: Complete these comments.
  *
@@ -55,8 +57,9 @@ public class SimpleBinaryMutation extends Mutation {
 		BinaryEncodedIndividual [] kids = new BinaryEncodedIndividual[kidsCount];
 		final RandomGenerator rnd = params.getRandomGenerator();
 		final double mutProb = getMutationProbability();
-		final NDecimalsIndividualSimpleFactory factory =
-				(NDecimalsIndividualSimpleFactory) params.getIndividualsFactory();
+//		final NDecimalsIndividualSimpleFactory factory =
+//				(NDecimalsIndividualSimpleFactory) params.getIndividualsFactory();
+		final IndividualsFactory factory = params.getIndividualsFactory();
 
 		for (int i = 0; i < kidsCount; i++) {
 
@@ -73,7 +76,7 @@ public class SimpleBinaryMutation extends Mutation {
 					if (rnd.nextDouble() < mutProb)
 						kidBits.flip(b);
 
-				NDecimalsIndividual tst = (NDecimalsIndividual)
+				BinaryEncodedIndividual tst = (BinaryEncodedIndividual)
 								factory.createSpecificIndividual(kidBits, params);
 				kidIsValid = factory.valid(tst);
 

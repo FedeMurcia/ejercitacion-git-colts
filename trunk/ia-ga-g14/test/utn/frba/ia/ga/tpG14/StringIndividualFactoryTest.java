@@ -22,6 +22,7 @@ public class StringIndividualFactoryTest {
 	StringIndividual individuo = (StringIndividual) factory.createDefaultIndividual(params);
 
 	Assert.assertEquals("aaaaaaaaaaaa", individuo.getString());
+	System.out.println(individuo.getBitStringRepresentation());
     }
 
     @Test

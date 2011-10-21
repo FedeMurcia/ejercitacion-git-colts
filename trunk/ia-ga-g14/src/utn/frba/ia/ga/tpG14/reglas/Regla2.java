@@ -23,11 +23,18 @@ public class Regla2 implements Regla {
 		StringCharacterIterator iterator = new StringCharacterIterator(
 				individuo);
 		while (iterator.current() != StringCharacterIterator.DONE) {
-			if (!Character.isLetterOrDigit(iterator.current()))
+			if (!this.isLetterOrDigit(iterator.current()))
 				return FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO;
 			iterator.next();
 		}
 		return condicionLength ? 0 : FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO;
+	}
+
+	private boolean isLetterOrDigit(char caracter) {
+		if(caracter >= 48 && caracter <= 57) return true;
+		if(caracter >= 65 && caracter <= 90) return true;
+		if(caracter >= 97 && caracter <= 122) return true;
+		return false;
 	}
 
 }

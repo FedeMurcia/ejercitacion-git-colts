@@ -1,8 +1,12 @@
 package utn.frba.ia.ga.tpG14;
 
+import java.text.StringCharacterIterator;
+
 import org.jaga.definitions.Fitness;
 import org.jaga.individualRepresentation.greycodedNumbers.BinaryEncodedIndividual;
 import org.jaga.util.BitString;
+
+import utn.frba.ia.ga.tpG14.util.TalladorBinario;
 
 /**
  * Define la estructura del individuo (cromosoma)
@@ -24,6 +28,15 @@ public class StringIndividual implements BinaryEncodedIndividual {
 	}
 
 	private void initializeRepresentation() {
+		this.representation = new BitString(this.string.length() * 8);
+		StringCharacterIterator iterator = new StringCharacterIterator(
+				this.string);
+		TalladorBinario talladorBinario = new TalladorBinario(
+				this.representation);
+		while (iterator.current() != StringCharacterIterator.DONE) {
+			talladorBinario.tallar(iterator.current());
+			iterator.next();
+		}
 	}
 
 	@Override
@@ -43,6 +56,10 @@ public class StringIndividual implements BinaryEncodedIndividual {
 	 */
 	public String getString() {
 		return string;
+	}
+
+	public String toString() {
+		return "a StringIndividual(" + string + ")";
 	}
 
 	@Override

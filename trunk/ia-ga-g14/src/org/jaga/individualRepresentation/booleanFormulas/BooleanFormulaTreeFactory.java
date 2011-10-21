@@ -187,6 +187,11 @@ public class BooleanFormulaTreeFactory implements IndividualsFactory {
 		return node;
 	}
 
+	@Override
+	public boolean valid(Individual individual) {
+		return true;
+	}
+
 	/*
 	//TEST:
 	public static void main(String[] args) {
