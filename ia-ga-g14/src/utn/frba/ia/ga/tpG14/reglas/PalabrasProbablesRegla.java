@@ -25,10 +25,11 @@ public class PalabrasProbablesRegla implements Regla {
 
 	@Override
 	public double evaluar(String individuo) {
+		String individuoUppercase = individuo.toUpperCase();
 		Double puntaje = 0d;
 		Set<String> palabras = puntajePorPalabra.keySet();
-		for(String palabra : palabras){
-			if(individuo.indexOf(palabra)!= -1 ){
+		for (String palabra : palabras) {
+			if (individuoUppercase.indexOf(palabra.toUpperCase()) != -1) {
 				puntaje += puntajePorPalabra.get(palabra);
 			}
 		}
