@@ -2,6 +2,8 @@ package utn.frba.ia.ga.tpG14.reglas;
 
 import java.text.StringCharacterIterator;
 
+import utn.frba.ia.ga.tpG14.FuncionAptitud;
+
 /**
  * R9) Puede haber juntos dos caracteres iguales siempre y cuando el siguiente
  * caracter aparezca sólo una única vez (por ejemplo, la cadena "..23345.." es
@@ -13,7 +15,8 @@ import java.text.StringCharacterIterator;
 public class Regla9 implements Regla {
 
 	/**
-	 * Regla binaria. Retorna 0 puntos si pasa la regla, Double.NEGATIVE_INFINITY si falla.
+	 * Regla binaria. Retorna 0 puntos si pasa la regla,
+	 * FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO si falla.
 	 */
 	@Override
 	public double evaluar(String individuo) {
@@ -50,7 +53,7 @@ public class Regla9 implements Regla {
 				 * "aaaab" sería inválido porque el siguiente a una repetición
 				 * de dos es "aa", se repite.
 				 */
-				return Double.NEGATIVE_INFINITY;
+				return FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO;
 			if ((repeticiones > 0) && (current != previous)) {
 				/*
 				 * si venía de una repetición y el actual es distinto al
@@ -59,7 +62,7 @@ public class Regla9 implements Regla {
 				 */
 				char next = iterator.next();
 				if (next == current)
-					return Double.NEGATIVE_INFINITY;
+					return FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO;
 				else {
 					/*
 					 * si no violaba la regla, vuelvo para atrás y reinicio las
@@ -72,6 +75,6 @@ public class Regla9 implements Regla {
 			repeticiones = current == previous ? repeticiones + 1 : 0;
 			iterator.next();
 		}
-		return repeticiones < 3 ? 0 : Double.NEGATIVE_INFINITY;
+		return repeticiones < 3 ? 0 : FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO;
 	}
 }

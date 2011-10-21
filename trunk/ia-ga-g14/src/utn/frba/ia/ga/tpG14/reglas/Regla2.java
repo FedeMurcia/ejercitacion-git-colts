@@ -2,6 +2,8 @@ package utn.frba.ia.ga.tpG14.reglas;
 
 import java.text.StringCharacterIterator;
 
+import utn.frba.ia.ga.tpG14.FuncionAptitud;
+
 /**
  * R2) El resultado es una cadena de 12 caracteres alfanuméricos (0-9 + A-Z +
  * a-z) donde importan si son mayúsculas o minúsculas ("A" es distinto de "a")
@@ -12,7 +14,8 @@ import java.text.StringCharacterIterator;
 public class Regla2 implements Regla {
 
 	/**
-	 * Regla binaria. Retorna 0 puntos si pasa la regla, Double.NEGATIVE_INFINITY si falla.
+	 * Regla binaria. Retorna 0 puntos si pasa la regla,
+	 * FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO si falla.
 	 */
 	@Override
 	public double evaluar(String individuo) {
@@ -21,10 +24,10 @@ public class Regla2 implements Regla {
 				individuo);
 		while (iterator.current() != StringCharacterIterator.DONE) {
 			if (!Character.isLetterOrDigit(iterator.current()))
-				return Double.NEGATIVE_INFINITY;
+				return FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO;
 			iterator.next();
 		}
-		return condicionLength ? 0 : Double.NEGATIVE_INFINITY;
+		return condicionLength ? 0 : FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO;
 	}
 
 }
