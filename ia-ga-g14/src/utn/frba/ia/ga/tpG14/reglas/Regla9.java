@@ -13,7 +13,7 @@ import java.text.StringCharacterIterator;
 public class Regla9 implements Regla {
 
 	/**
-	 * Regla binaria. Retorna 10 puntos si pasa la regla, -1 si falla.
+	 * Regla binaria. Retorna 0 puntos si pasa la regla, Double.NEGATIVE_INFINITY si falla.
 	 */
 	@Override
 	public double evaluar(String individuo) {
@@ -50,7 +50,7 @@ public class Regla9 implements Regla {
 				 * "aaaab" sería inválido porque el siguiente a una repetición
 				 * de dos es "aa", se repite.
 				 */
-				return -1;
+				return Double.NEGATIVE_INFINITY;
 			if ((repeticiones > 0) && (current != previous)) {
 				/*
 				 * si venía de una repetición y el actual es distinto al
@@ -59,7 +59,7 @@ public class Regla9 implements Regla {
 				 */
 				char next = iterator.next();
 				if (next == current)
-					return -1;
+					return Double.NEGATIVE_INFINITY;
 				else {
 					/*
 					 * si no violaba la regla, vuelvo para atrás y reinicio las
@@ -72,6 +72,6 @@ public class Regla9 implements Regla {
 			repeticiones = current == previous ? repeticiones + 1 : 0;
 			iterator.next();
 		}
-		return repeticiones < 3 ? 10 : -1;
+		return repeticiones < 3 ? 0 : Double.NEGATIVE_INFINITY;
 	}
 }

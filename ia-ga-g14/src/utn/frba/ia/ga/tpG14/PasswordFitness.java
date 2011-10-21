@@ -38,8 +38,8 @@ public class PasswordFitness implements FitnessEvaluationAlgorithm {
 
 		for (Regla regla : reglas) {
 			double _fitness = regla.evaluar(stringIndividuo);
-			if (_fitness == -1) {
-				fitnessValue = 0;
+			if (_fitness == Double.NEGATIVE_INFINITY) {
+				fitnessValue = Double.NEGATIVE_INFINITY;
 				break;
 			}
 			fitnessValue += _fitness;

@@ -42,13 +42,13 @@ public class IntegracionReglasTest {
 
 		for (Regla regla : reglas) {
 			double _fitness = regla.evaluar(individuo);
-			if (_fitness == -1) {
+			if (_fitness == Double.NEGATIVE_INFINITY) {
 				fitness = 0;
 				break;
 			}
 			fitness += _fitness;
 		}
-		assertTrue(fitness == 50);
+		assertTrue(fitness == 20);
 	}
 
 	@Test
@@ -58,13 +58,13 @@ public class IntegracionReglasTest {
 
 		for (Regla regla : reglas) {
 			double _fitness = regla.evaluar(individuo);
-			if (_fitness == -1) {
+			if (_fitness == Double.NEGATIVE_INFINITY) {
 				fitness = 0;
 				break;
 			}
 			fitness += _fitness;
 		}
-		assertTrue(fitness == 40);
+		assertTrue(fitness == 10);
 	}
 
 	@Test
@@ -74,13 +74,13 @@ public class IntegracionReglasTest {
 
 		for (Regla regla : reglas) {
 			double _fitness = regla.evaluar(individuo);
-			if (_fitness == -1) {
+			if (_fitness == Double.NEGATIVE_INFINITY) {
 				fitness = 0;
 				break;
 			}
 			fitness += _fitness;
 		}
-		assertTrue(fitness == 30);
+		assertTrue(fitness == 0);
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class IntegracionReglasTest {
 
 		for (Regla regla : reglas) {
 			double _fitness = regla.evaluar(individuo);
-			if (_fitness == -1) {
+			if (_fitness == Double.NEGATIVE_INFINITY) {
 				fitness = 0;
 				break;
 			}
