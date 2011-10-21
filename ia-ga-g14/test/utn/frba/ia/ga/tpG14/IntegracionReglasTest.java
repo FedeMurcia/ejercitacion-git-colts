@@ -1,6 +1,6 @@
 package utn.frba.ia.ga.tpG14;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -42,7 +42,7 @@ public class IntegracionReglasTest {
 
 		for (Regla regla : reglas) {
 			double _fitness = regla.evaluar(individuo);
-			if (_fitness == Double.NEGATIVE_INFINITY) {
+			if (_fitness == FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO) {
 				fitness = 0;
 				break;
 			}
@@ -58,7 +58,7 @@ public class IntegracionReglasTest {
 
 		for (Regla regla : reglas) {
 			double _fitness = regla.evaluar(individuo);
-			if (_fitness == Double.NEGATIVE_INFINITY) {
+			if (_fitness == FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO) {
 				fitness = 0;
 				break;
 			}
@@ -74,7 +74,7 @@ public class IntegracionReglasTest {
 
 		for (Regla regla : reglas) {
 			double _fitness = regla.evaluar(individuo);
-			if (_fitness == Double.NEGATIVE_INFINITY) {
+			if (_fitness == FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO) {
 				fitness = 0;
 				break;
 			}
@@ -90,7 +90,7 @@ public class IntegracionReglasTest {
 
 		for (Regla regla : reglas) {
 			double _fitness = regla.evaluar(individuo);
-			if (_fitness == Double.NEGATIVE_INFINITY) {
+			if (_fitness == FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO) {
 				fitness = 0;
 				break;
 			}

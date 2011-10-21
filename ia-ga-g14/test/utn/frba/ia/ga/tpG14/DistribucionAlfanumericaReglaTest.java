@@ -29,6 +29,11 @@ public class DistribucionAlfanumericaReglaTest {
 		assertTrue(regla.evaluar("a1") > regla.evaluar("aa"));
 		assertTrue(regla.evaluar("a1") > regla.evaluar("aa1"));
 		assertTrue(regla.evaluar("a1b2c") > regla.evaluar("a1b2cc"));
+		assertTrue(regla.evaluar("a1b2c") == regla.evaluar("A1B2C"));
+		assertTrue(regla.evaluar("a1") == regla.evaluar("A1"));
+		assertTrue((regla.evaluar("hola123") > regla.evaluar("hola123chau"))
+				&& (regla.evaluar("hola123chau") > regla
+						.evaluar("hola123chauadios")));
 	}
 
 }

@@ -1,5 +1,7 @@
 package utn.frba.ia.ga.tpG14.reglas;
 
+import utn.frba.ia.ga.tpG14.FuncionAptitud;
+
 /**
  * R11) El resultado debe contener la palabra "ann" en alguna parte de la
  * cadena.
@@ -9,11 +11,13 @@ package utn.frba.ia.ga.tpG14.reglas;
  */
 public class Regla11CaseSensitive implements Regla {
 	/**
-	 * Regla binaria. Retorna 0 puntos si pasa la regla, Double.NEGATIVE_INFINITY si falla.
+	 * Regla binaria. Retorna 0 puntos si pasa la regla,
+	 * FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO si falla.
 	 */
 	@Override
 	public double evaluar(String individuo) {
-		return (individuo.indexOf("ann") != -1) ? 0 : Double.NEGATIVE_INFINITY;
+		return (individuo.indexOf("ann") != -1) ? 0
+				: FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO;
 	}
 
 }
