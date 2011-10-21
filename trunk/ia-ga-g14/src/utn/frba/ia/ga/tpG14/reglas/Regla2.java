@@ -3,8 +3,8 @@ package utn.frba.ia.ga.tpG14.reglas;
 import java.text.StringCharacterIterator;
 
 /**
- * R2) El resultado es una cadena de 12 caracteres alfanuméricos (0-9 + A-Z +
- * a-z) donde importan si son mayúsculas o minúsculas (‘A’ es distinto de ‘a’)
+ * R2) El resultado es una cadena de 12 caracteres alfanumÃ©ricos (0-9 + A-Z +
+ * a-z) donde importan si son mayÃºsculas o minÃºsculas ("A" es distinto de "a")
  * 
  * @author Alme
  * 
