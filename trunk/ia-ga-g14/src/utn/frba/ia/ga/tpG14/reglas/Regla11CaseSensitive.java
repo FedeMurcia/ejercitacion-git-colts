@@ -9,11 +9,11 @@ package utn.frba.ia.ga.tpG14.reglas;
  */
 public class Regla11CaseSensitive implements Regla {
 	/**
-	 * Regla binaria. Retorna 10 puntos si pasa la regla, -1 si falla.
+	 * Regla binaria. Retorna 0 puntos si pasa la regla, Double.NEGATIVE_INFINITY si falla.
 	 */
 	@Override
 	public double evaluar(String individuo) {
-		return (individuo.indexOf("ann") != -1) ? 10 : -1;
+		return (individuo.indexOf("ann") != -1) ? 0 : Double.NEGATIVE_INFINITY;
 	}
 
 }

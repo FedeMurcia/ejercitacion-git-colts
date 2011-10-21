@@ -28,7 +28,7 @@ public class PalabrasProbablesRegla implements Regla {
 		Double puntaje = 0d;
 		Set<String> palabras = puntajePorPalabra.keySet();
 		for(String palabra : palabras){
-			if(individuo.indexOf(palabra)!=-1){
+			if(individuo.indexOf(palabra)!= -1 ){
 				puntaje += puntajePorPalabra.get(palabra);
 			}
 		}
