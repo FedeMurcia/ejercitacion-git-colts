@@ -4,8 +4,8 @@ import java.text.StringCharacterIterator;
 
 /**
  * R9) Puede haber juntos dos caracteres iguales siempre y cuando el siguiente
- * carácter aparezca sólo una única vez (por ejemplo, la cadena ‘..23345..’ es
- * válida, pero la cadena ‘..2334445..’ es inválida).
+ * caracter aparezca sÃ³lo una Ãºnica vez (por ejemplo, la cadena "..23345.." es
+ * vÃ¡lida, pero la cadena "..2334445.." es invÃ¡lida).
  * 
  * @author Alme
  * 
@@ -19,12 +19,12 @@ public class Regla9 implements Regla {
 	public double evaluar(String individuo) {
 		/*
 		 * Puede haber juntos dos caracteres iguales siempre y cuando el
-		 * siguiente carácter aparezca sólo una única vez (por ejemplo, la
-		 * cadena ‘..23345..’ es válida, pero la cadena ‘..2334445..’ es
-		 * inválida).
+		 * siguiente caracter aparezca sÃ³lo una Ãºnica vez (por ejemplo, la
+		 * cadena ".23345.." es vÃ¡lida, pero la cadena "..2334445.." es
+		 * invÃ¡lida).
 		 * 
-		 * alme: asumo que es válido 123345674, es decir, que el 'aparece sólo
-		 * una única vez' vale para la repetición inmediata, pero puede
+		 * alme: asumo que es vÃ¡lido 123345674, es decir, que el 'aparece sÃ³lo
+		 * una Ãºnica vez' vale para la repeticiÃ³n inmediata, pero puede
 		 * repetirse luego'
 		 */
 
@@ -41,28 +41,28 @@ public class Regla9 implements Regla {
 
 			if (repeticiones == 3)
 				/*
-				 * Considero 3 repeticiones (4 ocurrencias) una violación de la
+				 * Considero 3 repeticiones (4 ocurrencias) una violaciÃ³n de la
 				 * regla ya que
-				 * "dos caracteres iguales siempre y cuando el siguiente carácter aparezca sólo una única vez"
+				 * "dos caracteres iguales siempre y cuando el siguiente carÃ¡cter aparezca sÃ³lo una Ãºnica vez"
 				 * no establece que "el siguiente" tiene que ser distinto al
-				 * anterior. Entonces "aaab" sería válido porque el siguiente a
-				 * una repetición de dos no se repite inmediatamente, pero
-				 * "aaaab" sería inválido porque el siguiente a una repetición
+				 * anterior. Entonces "aaab" serÃ­a vÃ¡lido porque el siguiente a
+				 * una repeticiÃ³n de dos no se repite inmediatamente, pero
+				 * "aaaab" serÃ­a invÃ¡lido porque el siguiente a una repeticiÃ³n
 				 * de dos es "aa", se repite.
 				 */
 				return -1;
 			if ((repeticiones > 0) && (current != previous)) {
 				/*
-				 * si venía de una repetición y el actual es distinto al
-				 * anterior, voy a *pispear* adelante para ver si también es una
-				 * repetición
+				 * si venÃ­a de una repeticiÃ³n y el actual es distinto al
+				 * anterior, voy a *pispear* adelante para ver si tambiÃ©n es una
+				 * repeticiÃ³n
 				 */
 				char next = iterator.next();
 				if (next == current)
 					return -1;
 				else {
 					/*
-					 * si no violaba la regla, vuelvo para atrás y reinicio las
+					 * si no violaba la regla, vuelvo para atrÃ¡s y reinicio las
 					 * repeticiones
 					 */
 					iterator.previous();

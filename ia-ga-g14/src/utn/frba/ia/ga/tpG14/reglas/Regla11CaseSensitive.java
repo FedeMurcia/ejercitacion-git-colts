@@ -1,7 +1,7 @@
 package utn.frba.ia.ga.tpG14.reglas;
 
 /**
- * R11) El resultado debe contener la palabra “ann” en alguna parte de la
+ * R11) El resultado debe contener la palabra "ann" en alguna parte de la
  * cadena.
  * 
  * @author Alme

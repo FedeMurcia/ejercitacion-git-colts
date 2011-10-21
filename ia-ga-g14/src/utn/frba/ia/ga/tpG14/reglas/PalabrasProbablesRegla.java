@@ -4,11 +4,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Se me había ocurrido, pensando en el enunciado, en cómo sacar una password,
- * en dar una lista de posibles palabras que podrían estar incluídas en la
+ * Se me habÃ­a ocurrido, pensando en el enunciado, en cÃ³mo sacar una password,
+ * en dar una lista de posibles palabras que podrÃ­aan estar incluÃ­das en la
  * password, por ejemplo: futuro, conocimiento, 18/7/2042 (fecha de nacimiento
  * del agente enviado desde el futuro), DARPA, resistencia, etc. Y definir, para
- * mantenerlo realista, que no puede tener más de 2 de esas palabras (relleno de
+ * mantenerlo realista, que no puede tener mÃ¡s de 2 de esas palabras (relleno de
  * caracteres random que cumplan las otras reglas).
  * 
  * @author Alme
