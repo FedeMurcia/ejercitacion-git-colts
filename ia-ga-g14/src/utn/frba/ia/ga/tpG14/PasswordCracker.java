@@ -17,12 +17,10 @@ public class PasswordCracker {
 
 		GAParameterSet params = new DefaultParameterSet();
 		params.setPopulationSize(0);
-		params.setFitnessEvaluationAlgorithm(new Example1Fitness());
+		params.setFitnessEvaluationAlgorithm(new PasswordFitness());
 		params.setSelectionAlgorithm(new RouletteWheelSelection(-10E10));
 		params.setMaxGenerationNumber(100);
-		NDecimalsIndividualSimpleFactory fact = new NDecimalsIndividualSimpleFactory(2, 6, 30);
-		fact.setConstraint(0, new RangeConstraint(-6, 6));
-		fact.setConstraint(1, new RangeConstraint(-4, 4));
+		StringIndividualFactory fact = new StringIndividualFactory(12);
 		params.setIndividualsFactory(fact);
 
 		ReusableSimpleGA ga = new ReusableSimpleGA(params);
