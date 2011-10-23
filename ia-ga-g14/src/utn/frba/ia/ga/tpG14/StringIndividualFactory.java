@@ -42,9 +42,9 @@ public class StringIndividualFactory implements IndividualsFactory {
 
 	@Override
 	public Individual createDefaultIndividual(GAParameterSet params) {
-		StringBuilder stringBuilder = new StringBuilder(stringLength);
+		StringBuilder stringBuilder = new StringBuilder(getStringLength());
 
-		for (int i = 0; i < stringLength; i++)
+		for (int i = 0; i < getStringLength(); i++)
 			stringBuilder.append("a");
 
 		String string = stringBuilder.toString();
@@ -53,16 +53,16 @@ public class StringIndividualFactory implements IndividualsFactory {
 
 	@Override
 	public Individual createRandomIndividual(GAParameterSet params) {
-		StringBuilder stringBuilder = new StringBuilder(stringLength);
+		StringBuilder stringBuilder = new StringBuilder(getStringLength());
 
-		for (int i = 0; i < stringLength; i++)
+		for (int i = 0; i < getStringLength(); i++)
 			stringBuilder.append(this.proximoCaracterRandom(params));
 
 		String string = stringBuilder.toString();
 		return new StringIndividual(string);
 	}
 
-	private char proximoCaracterRandom(GAParameterSet params) {
+	protected char proximoCaracterRandom(GAParameterSet params) {
 		return (char) params.getRandomGenerator().nextInt(minCodePoint,
 				maxCodePoint);
 	}
@@ -123,7 +123,12 @@ public class StringIndividualFactory implements IndividualsFactory {
 	}
 
 	public boolean valid(Individual tst) {
-		return new Regla2().evaluar(((StringIndividual) tst).getString()) != FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO;
+//		return new Regla2().evaluar(((StringIndividual) tst).getString()) != FuncionAptitud.APTITUD_INDIVIDUO_INVALIDO;
+		return true;
+	}
+
+	protected int getStringLength() {
+		return stringLength;
 	}
 
 }

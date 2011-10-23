@@ -4,7 +4,7 @@ import java.text.StringCharacterIterator;
 
 public class MayusMinRegla implements Regla {
 
-	public static final double PUNTAJE_POR_TRANSICION = 2.5;
+	private double puntajeMaximo = 15d;
 
 	/**
 	 * Regla propia que otorga mayor valuación a una password con alternancia de
@@ -14,6 +14,7 @@ public class MayusMinRegla implements Regla {
 	public double evaluar(String individuo) {
 		if (individuo.isEmpty())
 			return 0;
+		double puntajePorTransicion = getPuntajeMaximo() / (double) individuo.length();
 
 		StringCharacterIterator iterator = new StringCharacterIterator(
 				individuo);
@@ -38,12 +39,20 @@ public class MayusMinRegla implements Regla {
 					 * ^ = operador de XOR, es decir, evaluará true cuando no
 					 * sean simultáneamente uppercase o lowercase
 					 */
-					puntaje += PUNTAJE_POR_TRANSICION;
+					puntaje += puntajePorTransicion;
 				}
 			}
 		} while (iterator.current() != StringCharacterIterator.DONE);
 
 		return puntaje;
+	}
+
+	public double getPuntajeMaximo() {
+		return puntajeMaximo;
+	}
+
+	public void setPuntajeMaximo(double puntajeMaximo) {
+		this.puntajeMaximo = puntajeMaximo;
 	}
 
 }

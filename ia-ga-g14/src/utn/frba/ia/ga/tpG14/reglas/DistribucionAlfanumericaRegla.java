@@ -4,7 +4,7 @@ import java.text.StringCharacterIterator;
 
 public class DistribucionAlfanumericaRegla implements Regla {
 
-	public static final int PUNTAJE_MAXIMO = 15;
+	private double puntajeMaximo = 15;
 
 	@Override
 	public double evaluar(String individuo) {
@@ -36,6 +36,14 @@ public class DistribucionAlfanumericaRegla implements Regla {
 		double proporcionDistribucionAlfanumerica = 1 - 2 * Math
 				.abs(0.5 - proporcionLetras);
 
-		return proporcionDistribucionAlfanumerica * PUNTAJE_MAXIMO;
+		return proporcionDistribucionAlfanumerica * this.getPuntajeMaximo();
+	}
+
+	public double getPuntajeMaximo() {
+		return puntajeMaximo;
+	}
+
+	public void setPuntajeMaximo(double puntajeMaximo) {
+		this.puntajeMaximo = puntajeMaximo;
 	}
 }
