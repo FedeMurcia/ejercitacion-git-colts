@@ -39,7 +39,7 @@ public class PasswordFitnessTest {
 
 		// Seteamos el algoritmo de fitness de password
 		PasswordFitness passwordFitness = new PasswordFitness(new Regla2(),
-				new Regla9(), new Regla11CaseSensitiveFlexibilizada(),
+				new Regla9(), new Regla11CaseSensitiveFlexibilizada(500),
 				new PalabrasProbablesRegla(palabras),
 				new DistribucionAlfanumericaRegla(), new MayusMinRegla());
 		params.setFitnessEvaluationAlgorithm(passwordFitness);

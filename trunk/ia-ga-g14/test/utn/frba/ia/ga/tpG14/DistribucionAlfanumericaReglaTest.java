@@ -18,9 +18,9 @@ public class DistribucionAlfanumericaReglaTest {
 
 	@Test
 	public void test() {
-		assertTrue(regla.evaluar("a1") == DistribucionAlfanumericaRegla.PUNTAJE_MAXIMO);
-		assertTrue(regla.evaluar("a1b2c3") == DistribucionAlfanumericaRegla.PUNTAJE_MAXIMO);
-		assertTrue(regla.evaluar("abc123") == DistribucionAlfanumericaRegla.PUNTAJE_MAXIMO);
+		assertTrue(regla.evaluar("a1") == regla.getPuntajeMaximo());
+		assertTrue(regla.evaluar("a1b2c3") == regla.getPuntajeMaximo());
+		assertTrue(regla.evaluar("abc123") == regla.getPuntajeMaximo());
 		assertTrue(regla.evaluar("aa") == 0);
 		assertTrue(regla.evaluar("a") == 0);
 		assertTrue(regla.evaluar("") == 0);

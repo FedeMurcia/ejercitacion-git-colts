@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import utn.frba.ia.ga.tpG14.reglas.Regla11CaseSensitive;
+import utn.frba.ia.ga.tpG14.reglas.Regla11CaseSensitiveFlexibilizada;
 
 public class Regla11ConsiderandoRegla2Test {
 
@@ -22,5 +23,18 @@ public class Regla11ConsiderandoRegla2Test {
 		assertFalse(regla11.evaluar("asd") == 0);
 		assertFalse(regla11.evaluar("") == 0);		
 	}
-
+	@Test
+	public void testFlex() {
+		Regla11CaseSensitiveFlexibilizada regla11 = new Regla11CaseSensitiveFlexibilizada(500);
+		assertTrue(regla11.evaluar("ann") == 500);
+		assertTrue(regla11.evaluar("asdann") == 500);
+		assertTrue(regla11.evaluar("annasd") == 500);
+		assertTrue(regla11.evaluar("asdannads") == 500);
+		
+		assertFalse(regla11.evaluar("ANN") == 500);
+		assertFalse(regla11.evaluar("a1nn") == 500);
+		assertFalse(regla11.evaluar("anN") == 500);
+		assertFalse(regla11.evaluar("asd") == 500);
+		assertFalse(regla11.evaluar("") == 500);		
+	}
 }

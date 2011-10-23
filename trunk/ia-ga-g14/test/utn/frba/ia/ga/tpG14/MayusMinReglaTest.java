@@ -1,5 +1,6 @@
 package utn.frba.ia.ga.tpG14;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -18,12 +19,19 @@ public class MayusMinReglaTest {
 
 	@Test
 	public void test() {
-		assertTrue(regla.evaluar("HoLa") == MayusMinRegla.PUNTAJE_POR_TRANSICION * 3);
-		assertTrue(regla.evaluar("HOLA") == MayusMinRegla.PUNTAJE_POR_TRANSICION * 0);
-		assertTrue(regla.evaluar("hola") == MayusMinRegla.PUNTAJE_POR_TRANSICION * 0);
-		assertTrue(regla.evaluar("") == MayusMinRegla.PUNTAJE_POR_TRANSICION * 0);
-		assertTrue(regla.evaluar("holaChau") == MayusMinRegla.PUNTAJE_POR_TRANSICION * 2);
-		assertTrue(regla.evaluar("MuChAsTrAnSiCiOnEs") == MayusMinRegla.PUNTAJE_POR_TRANSICION * 17);
+		assertEquals(regla.evaluar("HoLa"),
+				(regla.getPuntajeMaximo() / "HoLa".length()) * 3, 0.001);
+		assertEquals(regla.evaluar("HOLA"),
+				(regla.getPuntajeMaximo() / "HOLA".length()) * 0, 0.0);
+		assertEquals(regla.evaluar("hola"),
+				(regla.getPuntajeMaximo() / "hola".length()) * 0, 0.0);
+		assertEquals(regla.evaluar(""), 0, 0.0);
+		assertEquals(regla.evaluar("holaChau"),
+				(regla.getPuntajeMaximo() / "holaChau".length()) * 2, 0.001);
+		assertEquals(
+				regla.evaluar("MuChAsTrAnSiCiOnEs"),
+				(regla.getPuntajeMaximo() / "MuChAsTrAnSiCiOnEs".length()) * 17,
+				0.001);
 
 	}
 }
