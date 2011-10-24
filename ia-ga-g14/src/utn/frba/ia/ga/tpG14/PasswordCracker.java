@@ -35,7 +35,7 @@ public class PasswordCracker {
 	public void exec() {
 		GAParameterSet params = new DefaultParameterSet();
 		params.setPopulationSize(250);
-		params.setMaxGenerationNumber(1000);
+		params.setMaxGenerationNumber(100);
 
 		List<Regla> reglas = this.initializeReglas();
 
@@ -44,7 +44,7 @@ public class PasswordCracker {
 
 		// Seteamos el algoritmo de selección
 		params.setSelectionAlgorithm(new RouletteWheelSelection(-1));
-		// params.setSelectionAlgorithm(new TournamentSelection());
+//		 params.setSelectionAlgorithm(new TournamentSelection());
 		// params.setSelectionAlgorithm(new
 		// TwoTournamentProbabalisticSelection());
 
