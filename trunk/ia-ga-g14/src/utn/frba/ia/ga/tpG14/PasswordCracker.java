@@ -2,30 +2,31 @@ package utn.frba.ia.ga.tpG14;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FilePermission;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.jaga.definitions.*;
-import org.jaga.exampleApplications.Example1Fitness;
-import org.jaga.util.*;
-import org.jaga.masterAlgorithm.*;
-import org.jaga.individualRepresentation.greycodedNumbers.*;
-import org.jaga.hooks.*;
-import org.jaga.selection.*;
+import javax.swing.JOptionPane;
+
+import org.jaga.definitions.GAParameterSet;
+import org.jaga.definitions.GAResult;
+import org.jaga.hooks.AnalysisHook;
+import org.jaga.masterAlgorithm.ReusableSimpleGA;
+import org.jaga.selection.RouletteWheelSelection;
+import org.jaga.selection.TournamentSelection;
+import org.jaga.util.DefaultParameterSet;
 
 import utn.frba.ia.ga.tpG14.reglas.DistribucionAlfanumericaRegla;
 import utn.frba.ia.ga.tpG14.reglas.MayusMinRegla;
 import utn.frba.ia.ga.tpG14.reglas.PalabrasProbablesRegla;
 import utn.frba.ia.ga.tpG14.reglas.Regla;
-import utn.frba.ia.ga.tpG14.reglas.Regla11CaseSensitive;
 import utn.frba.ia.ga.tpG14.reglas.Regla11CaseSensitiveFlexibilizada;
 import utn.frba.ia.ga.tpG14.reglas.Regla2;
 import utn.frba.ia.ga.tpG14.reglas.Regla9;
+import utn.frba.ia.ga.tpG14.util.PropertiesConfig;
 
 public class PasswordCracker {
 
@@ -33,9 +34,17 @@ public class PasswordCracker {
 	}
 
 	public void exec() {
+		PropertiesConfig config = this.cargarConfiguracion();
+		String algoritmoSeleccion = config.getAlgoritmoSeleccion();
+		String metodoPoblacionInicial = config.getMetodoPoblacionInicial();
+		String inyeccionPatrones = config.getInyeccionPatrones(); // "si" ó "no"
+		int tamanioPoblacion = config.getTamanioPoblacion();
+		int cantidadGeneraciones = config.getCantidadGeneraciones();
+
 		GAParameterSet params = new DefaultParameterSet();
-		params.setPopulationSize(250);
-		params.setMaxGenerationNumber(100);
+
+		params.setPopulationSize(tamanioPoblacion);
+		params.setMaxGenerationNumber(cantidadGeneraciones);
 
 		List<Regla> reglas = this.initializeReglas();
 
@@ -43,12 +52,16 @@ public class PasswordCracker {
 		params.setFitnessEvaluationAlgorithm(passwordFitness);
 
 		// Seteamos el algoritmo de selección
-		params.setSelectionAlgorithm(new RouletteWheelSelection(-1));
-//		 params.setSelectionAlgorithm(new TournamentSelection());
+		if (algoritmoSeleccion.equalsIgnoreCase("Ruleta"))
+			params.setSelectionAlgorithm(new RouletteWheelSelection(-1));
+		else if (algoritmoSeleccion.equalsIgnoreCase("Torneo"))
+			params.setSelectionAlgorithm(new TournamentSelection());
 		// params.setSelectionAlgorithm(new
 		// TwoTournamentProbabalisticSelection());
 
-		StringIndividualFactory fact = initializeIndividualsFactory(true, true);
+		StringIndividualFactory fact = initializeIndividualsFactory(
+				metodoPoblacionInicial.equalsIgnoreCase("ad-hoc"),
+				inyeccionPatrones.equalsIgnoreCase("si"));
 		params.setIndividualsFactory(fact);
 
 		ReusableSimpleGA ga = new ReusableSimpleGA(params);
@@ -60,6 +73,20 @@ public class PasswordCracker {
 
 		System.out.println("\nTODO HECHO.\n");
 		System.out.println("Result is: " + result);
+	}
+
+	private PropertiesConfig cargarConfiguracion() {
+		PropertiesConfig config = new PropertiesConfig("config.ini");
+		try {
+			config.cargarConfiguracion();
+		} catch (FileNotFoundException e) {
+			config.crearConfiguracionDefault();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,
+					"Error al leer archivo de configuración", "ERROR",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return config;
 	}
 
 	private AnalysisHook initializeAnalysisHook(ReusableSimpleGA ga) {
@@ -82,13 +109,14 @@ public class PasswordCracker {
 		return hook;
 	}
 
-	private StringIndividualFactory initializeIndividualsFactory(boolean adHoc, boolean inyectaAnn) {
+	private StringIndividualFactory initializeIndividualsFactory(boolean adHoc,
+			boolean inyectaAnn) {
 		if (adHoc && !inyectaAnn)
 			return new StringIndividualFactory(12, // Longitud
 					48, // Codepoint_0
 					122 // Codepoint_z
-			);else 
-		if (adHoc && inyectaAnn)
+			);
+		else if (adHoc && inyectaAnn)
 			return new InyectaPatronStringIndividualFactory(12, // Longitud
 					48, // Codepoint_0
 					122 // Codepoint_z
