@@ -11,7 +11,7 @@ import org.junit.Test;
 import ar.alme.morninformer.users.ParseException;
 import ar.alme.utils.SimpleHTMLTextExtractor;
 
-public class SimleHTMLTextExtarctorTest {
+public class SimleHTMLTextExtractorTest {
 
 	private String htmlSource;
 	private String htmlSource2;
