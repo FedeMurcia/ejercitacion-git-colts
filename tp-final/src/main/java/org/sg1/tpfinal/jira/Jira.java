@@ -43,8 +43,6 @@ public class Jira {
 
 		// For each day
 		do {
-			// Add a day
-			calendar.add(Calendar.DAY_OF_YEAR, 1);
 			final Date on = calendar.getTime();
 
 			// For each origin state
@@ -53,7 +51,8 @@ public class Jira {
 				for (final State toState : State.values()) {
 
 					// XXX Continuar desde aquí. :P
-					// DEBO agarrar las issues con sus transiciones y agregarlos a mi tracker (busca y agrega¿?)
+					// DEBO agarrar las issues con sus transiciones y agregarlos
+					// a mi tracker (busca y agrega¿?)
 					final SearchResult searchResult = restClient
 							.getSearchClient().searchJql(
 									buildQuery(projectId, on, fromState,
@@ -62,6 +61,9 @@ public class Jira {
 					searchResult.getIssues();
 				}
 			}
+
+			// Add a day
+			calendar.add(Calendar.DAY_OF_YEAR, 1);
 
 		} while (calendar.getTime().before(toDate));
 
