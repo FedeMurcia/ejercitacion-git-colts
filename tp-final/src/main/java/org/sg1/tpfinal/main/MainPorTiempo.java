@@ -1,4 +1,4 @@
-package org.sg1.tpfinal;
+package org.sg1.tpfinal.main;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -45,8 +45,6 @@ public class MainPorTiempo {
 
 	private static AuthenticationHandler createAuthenticationHandler() {
 		return new AnonymousAuthenticationHandler();
-		// return new BasicHttpAuthenticationHandler("alejoabdala",
-		// "extrapera");
 	}
 
 }
