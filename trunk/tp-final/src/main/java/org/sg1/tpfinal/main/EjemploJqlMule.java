@@ -1,4 +1,4 @@
-package org.sg1.tpfinal;
+package org.sg1.tpfinal.main;
 
 import java.net.URI;
 import java.net.URISyntaxException;

@@ -1,4 +1,4 @@
-package org.sg1.tpfinal;
+package org.sg1.tpfinal.main;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,7 +29,7 @@ public class MainTransitions {
 				createAuthenticationHandler());
 
 		// Hacemos consultas
-		final Issue issue = restClient.getIssueClient().getIssue("STUDIO-1",
+		final Issue issue = restClient.getIssueClient().getIssue("MULE-1",
 				PROGRESS_MONITOR);
 
 		final Iterable<Transition> transitions = restClient.getIssueClient()
@@ -43,7 +43,5 @@ public class MainTransitions {
 
 	private static AuthenticationHandler createAuthenticationHandler() {
 		return new AnonymousAuthenticationHandler();
-		// return new BasicHttpAuthenticationHandler("alejoabdala",
-		// "extrapera");
 	}
 }
