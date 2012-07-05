@@ -44,7 +44,6 @@ public class Jira {
 		// For each day
 		do {
 			final Date on = calendar.getTime();
-
 			// For each origin state
 			for (final State fromState : State.values()) {
 				// For each end state
@@ -72,20 +71,28 @@ public class Jira {
 
 	private String buildQuery(final String projectId, final Date date,
 			final State from, final State to) {
+
 		return from.equals(to) ? buildReflexiveStateQuery(projectId, date, from)
 				: buildFromToStateQuery(projectId, date, from, to);
 	}
 
 	private String buildFromToStateQuery(final String projectId,
 			final Date date, final State from, final State to) {
-		return String.format(FROM_STATE_TO_STATE_QUERY, from.toString(),
-				to.toString(), formatDate(date), projectId);
+
+		return String.format(FROM_STATE_TO_STATE_QUERY, //
+				from.toString(), // origin state
+				to.toString(), // end state
+				formatDate(date), // date
+				projectId); // project
 	}
 
 	private String buildReflexiveStateQuery(final String projectId,
-			final Date date, final State from) {
-		return String.format(REFLEXIVE_STATE_QUERY, from.toString(), projectId,
-				date);
+			final Date date, final State state) {
+
+		return String.format(REFLEXIVE_STATE_QUERY, //
+				state.toString(), // state
+				projectId, // project
+				formatDate(date)); // date
 	}
 
 	private String formatDate(final Date date) {
