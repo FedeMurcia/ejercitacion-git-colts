@@ -35,4 +35,8 @@ public class Transition {
 		return true;
 	}
 
+	public State getFromState() {
+		return from;
+	}
+
 }

@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.sg1.tpfinal.jira.Jira;
+import org.sg1.tpfinal.model.State;
+import org.sg1.tpfinal.model.Tracker;
 
 import com.atlassian.jira.rest.client.AuthenticationHandler;
 import com.atlassian.jira.rest.client.auth.AnonymousAuthenticationHandler;
@@ -17,7 +19,7 @@ public class Main {
 
 	private static final String PROJECT_ID = "MULE";
 
-	private static final String FROM_DATE_STRING = "01/01/2011";
+	private static final String FROM_DATE_STRING = "01/07/2012";
 	private static final String TO_DATE_STRING = "04/07/2012";
 
 	private static Date FROM_DATE;
@@ -29,7 +31,30 @@ public class Main {
 		final Jira jira = new Jira();
 		jira.connect(createAuthenticationHandler(), new URI(JIRA_SERVER_URI));
 
-		jira.createTracker(PROJECT_ID, FROM_DATE, TO_DATE);
+		final Tracker tracker = jira.createTracker(PROJECT_ID, FROM_DATE,
+				TO_DATE);
+
+		// For each origin state
+		for (final State from : State.values()) {
+
+			// For each end state
+			for (final State to : State.values()) {
+
+				final double transitionProbability = tracker
+						.transitionProbability(from, to);
+
+				System.out.println("La probabilidad de ir de " + from + " a "
+						+ to + " es de " + transitionProbability);
+			}
+		}
+
+		System.out.println("Total issues: " + tracker.getCountIssues());
+		System.out.println("Total transiciones: "
+				+ tracker.getCountAllTranstitions());
+
+		for (final State from : State.values())
+			System.out.println("Total transiciones desde " + from + ": "
+					+ tracker.getCountTransitionsFrom(from));
 	}
 
 	private static void initializeDates() {
