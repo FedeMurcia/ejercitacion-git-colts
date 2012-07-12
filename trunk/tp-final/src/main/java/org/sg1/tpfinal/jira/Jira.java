@@ -37,13 +37,12 @@ public class Jira {
 
 	private JiraRestClient restClient;
 
-	public void connect(final AuthenticationHandler authenticationHandler,
-			final URI jiraServerUri) throws URISyntaxException {
+	public void connect(final AuthenticationHandler authenticationHandler, final URI jiraServerUri)
+			throws URISyntaxException {
 		restClient = FACTORY.create(jiraServerUri, authenticationHandler);
 	}
 
-	public Tracker createTracker(final String projectId, final Date fromDate,
-			final Date toDate) {
+	public Tracker createTracker(final String projectId, final Date fromDate, final Date toDate) {
 
 		final Tracker tracker = new Tracker();
 
@@ -63,10 +62,8 @@ public class Jira {
 				for (final State toState : State.values()) {
 					System.out.println("Estado " + fromState + " a " + toState);
 
-					final SearchResult searchResult = restClient
-							.getSearchClient().searchJql(
-									buildQuery(projectId, on, fromState,
-											toState), PROGRESS_MONITOR);
+					final SearchResult searchResult = restClient.getSearchClient().searchJql(
+							buildQuery(projectId, on, fromState, toState), PROGRESS_MONITOR);
 
 					// For each issue
 					for (final BasicIssue basicIssue : searchResult.getIssues()) {
@@ -74,14 +71,13 @@ public class Jira {
 						final String issueKey = basicIssue.getKey();
 
 						if (!tracker.hasIssue(issueKey)) {
-							final Issue issue = restClient.getIssueClient()
-									.getIssue(issueKey, PROGRESS_MONITOR);
+							final Issue issue = restClient.getIssueClient().getIssue(issueKey,
+									PROGRESS_MONITOR);
 
 							final String asignee = getAssignee(issue);
 							final String reporter = getReporter(issue);
 
-							final Sg1Issue newIssue = new Sg1Issue(issueKey,
-									asignee, reporter);
+							final Sg1Issue newIssue = new Sg1Issue(issueKey, asignee, reporter);
 
 							tracker.addIssue(newIssue);
 						}
@@ -106,27 +102,24 @@ public class Jira {
 
 	private String getReporter(final Issue issue) {
 		final BasicUser reporterUser = issue.getReporter();
-		final String reporter = reporterUser != null ? reporterUser
-				.getDisplayName() : NULL_REPORTER_USER;
+		final String reporter = reporterUser != null ? reporterUser.getDisplayName() : NULL_REPORTER_USER;
 		return reporter;
 	}
 
 	private String getAssignee(final Issue issue) {
 		final BasicUser assigneeUser = issue.getAssignee();
-		final String asignee = assigneeUser != null ? assigneeUser
-				.getDisplayName() : NULL_ASSIGNEE_USER;
+		final String asignee = assigneeUser != null ? assigneeUser.getDisplayName() : NULL_ASSIGNEE_USER;
 		return asignee;
 	}
 
-	private String buildQuery(final String projectId, final Date date,
-			final State from, final State to) {
+	private String buildQuery(final String projectId, final Date date, final State from, final State to) {
 
-		return from.equals(to) ? buildReflexiveStateQuery(projectId, date, from)
-				: buildFromToStateQuery(projectId, date, from, to);
+		return from.equals(to) ? buildReflexiveStateQuery(projectId, date, from) : buildFromToStateQuery(
+				projectId, date, from, to);
 	}
 
-	private String buildFromToStateQuery(final String projectId,
-			final Date date, final State from, final State to) {
+	private String buildFromToStateQuery(final String projectId, final Date date, final State from,
+			final State to) {
 
 		return String.format(FROM_STATE_TO_STATE_QUERY, //
 				from.toString(), // origin state
@@ -138,14 +131,13 @@ public class Jira {
 	/**
 	 * Query para el NO cambio de estado, o sea que se mantiene en el mismo
 	 * estado.
-	 *
+	 * 
 	 * @param projectId
 	 * @param date
 	 * @param state
 	 * @return
 	 */
-	private String buildReflexiveStateQuery(final String projectId,
-			final Date date, final State state) {
+	private String buildReflexiveStateQuery(final String projectId, final Date date, final State state) {
 
 		return String.format(REFLEXIVE_STATE_QUERY, //
 				state.toString(), // state
@@ -166,19 +158,16 @@ public class Jira {
 	}
 
 	private String formatMonth(final Calendar calendar) {
-		final String monthStr = String
-				.valueOf(calendar.get(Calendar.MONTH) + 1);
+		final String monthStr = String.valueOf(calendar.get(Calendar.MONTH) + 1);
 
 		// assert month string is 2 characters long
 		return monthStr.length() == 1 ? "0" + monthStr : monthStr;
 	}
 
 	private String formatDayOfMonth(final Calendar calendar) {
-		final String dayOfMonthStr = String.valueOf(calendar
-				.get(Calendar.DAY_OF_MONTH));
+		final String dayOfMonthStr = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
 
 		// assert day of month string is 2 characters long
-		return dayOfMonthStr.length() == 1 ? "0" + dayOfMonthStr
-				: dayOfMonthStr;
+		return dayOfMonthStr.length() == 1 ? "0" + dayOfMonthStr : dayOfMonthStr;
 	}
 }

@@ -1,6 +1,9 @@
 package org.sg1.tpfinal.model;
 
-public class Transition {
+import java.io.Serializable;
+
+public class Transition implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private final State from;
 	private final State to;

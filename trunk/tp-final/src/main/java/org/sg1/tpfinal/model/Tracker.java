@@ -1,5 +1,6 @@
 package org.sg1.tpfinal.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -7,7 +8,8 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 
-public class Tracker {
+public class Tracker implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private final Collection<Sg1Issue> issues = new HashSet<Sg1Issue>();
 
@@ -16,11 +18,10 @@ public class Tracker {
 	}
 
 	public double transitionProbability(final State from, final State to) {
-		final int countTransitionsFrom = getCountTransitionsFrom(from);
+		final int countTransitionsFrom = getTransitionsFromCount(from);
 
 		if (countTransitionsFrom == 0)
-			// throw new RuntimeException("no existió esta transición");
-			return 0;
+			throw new NonExistentTransition(this, from, to);
 
 		return (double) getCountTransitionsFromTo(from, to) / (double) countTransitionsFrom;
 	}
@@ -54,7 +55,7 @@ public class Tracker {
 	/* ********* Transitions ******************* */
 	/* ***************************************** */
 
-	public int getCountTransitionsFrom(final State from) {
+	public int getTransitionsFromCount(final State from) {
 		return getAllTransitionsFrom(from).size();
 	}
 
@@ -91,11 +92,11 @@ public class Tracker {
 		return transitions;
 	}
 
-	public int getCountAllTranstitions() {
+	public int getAllTranstitionsCount() {
 		return getAllTransitions().size();
 	}
 
-	public int getCountIssues() {
+	public int getIssuesCount() {
 		return issues.size();
 	}
 
