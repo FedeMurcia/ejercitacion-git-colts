@@ -19,11 +19,10 @@ public class Tracker {
 		final int countTransitionsFrom = getCountTransitionsFrom(from);
 
 		if (countTransitionsFrom == 0)
-//			throw new RuntimeException("no existió esta transición");
+			// throw new RuntimeException("no existió esta transición");
 			return 0;
 
-		return (double) getCountTransitionsFromTo(from, to)
-				/ (double) countTransitionsFrom;
+		return (double) getCountTransitionsFromTo(from, to) / (double) countTransitionsFrom;
 	}
 
 	/* ***************************************** */
@@ -80,8 +79,7 @@ public class Tracker {
 			final State from, //
 			final State to) {
 
-		return Collections2.filter(getAllTransitions(),
-				Predicates.equalTo(new Transition(from, to)));
+		return Collections2.filter(getAllTransitions(), Predicates.equalTo(new Transition(from, to)));
 	}
 
 	private Collection<Transition> getAllTransitions() {
