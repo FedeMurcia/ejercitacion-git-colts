@@ -3,6 +3,7 @@ package org.sg1.tpfinal.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -23,7 +24,8 @@ public class Tracker implements Serializable {
 		if (countTransitionsFrom == 0)
 			throw new NonExistentTransition(this, from, to);
 
-		return (double) getCountTransitionsFromTo(from, to) / (double) countTransitionsFrom;
+		return (double) getCountTransitionsFromTo(from, to)
+				/ (double) countTransitionsFrom;
 	}
 
 	/* ***************************************** */
@@ -80,11 +82,12 @@ public class Tracker implements Serializable {
 			final State from, //
 			final State to) {
 
-		return Collections2.filter(getAllTransitions(), Predicates.equalTo(new Transition(from, to)));
+		return Collections2.filter(getAllTransitions(),
+				Predicates.equalTo(new Transition(from, to)));
 	}
 
 	private Collection<Transition> getAllTransitions() {
-		final Collection<Transition> transitions = new HashSet<Transition>();
+		final Collection<Transition> transitions = new LinkedList<Transition>();
 
 		for (final Sg1Issue issue : issues)
 			transitions.addAll(issue.getTransitions());
