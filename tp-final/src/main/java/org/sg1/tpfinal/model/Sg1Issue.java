@@ -1,9 +1,11 @@
 package org.sg1.tpfinal.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Sg1Issue {
+public class Sg1Issue implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private final List<Transition> transitions = new LinkedList<Transition>();
 
