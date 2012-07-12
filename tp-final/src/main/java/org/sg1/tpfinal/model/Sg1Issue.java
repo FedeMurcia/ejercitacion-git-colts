@@ -14,7 +14,8 @@ public class Sg1Issue implements Serializable {
 
 	private final String key;
 
-	public Sg1Issue(final String key, final String asignee, final String reporter) {
+	public Sg1Issue(final String key, final String asignee,
+			final String reporter) {
 		this.key = key;
 		this.asignee = asignee;
 		this.reporter = reporter;
@@ -28,14 +29,32 @@ public class Sg1Issue implements Serializable {
 		return transitions;
 	}
 
+	/**
+	 * Answers the name of the person assigned to solve this issue.
+	 *
+	 * @return String representative of the name o the person or
+	 *         <code>null</code> in case no one is
+	 */
 	public String getAsignee() {
 		return asignee;
 	}
 
+	/**
+	 * Answers the name of the person assigned to report this issue.
+	 *
+	 * @return String representative of the name o the person or
+	 *         <code>null</code> in case no one is
+	 */
 	public String getReporter() {
 		return reporter;
 	}
 
+	/**
+	 * Answers the unique ID for this issue. Should never be null. Usually its
+	 * just the name of the project concatenated with a number.
+	 *
+	 * @return ID
+	 */
 	public String getKey() {
 		return key;
 	}
