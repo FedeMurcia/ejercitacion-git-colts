@@ -1,6 +1,11 @@
 package org.sg1.tpfinal.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Results {
+
+	private static final Logger logger = LoggerFactory.getLogger(Results.class);
 
 	private final Tracker tracker;
 
@@ -16,16 +21,15 @@ public class Results {
 				printTransitionProbability(tracker, from, to);
 
 		// Print issues count
-		System.out.println("Total issues: " + tracker.getIssuesCount());
+		logger.info("Total issues: " + tracker.getIssuesCount());
 
 		// Print transitions count
-		System.out.println("Total transiciones: "
-				+ tracker.getAllTranstitionsCount());
+		logger.info("Total transiciones: " + tracker.getAllTranstitionsCount());
 
 		// For each state
 		for (final State from : State.values())
 			// Print the number of transitions from the state
-			System.out.println("Total transiciones desde " + from + ": "
+			logger.info("Total transiciones desde " + from + ": "
 					+ tracker.getTransitionsFromCount(from));
 	}
 
@@ -35,11 +39,11 @@ public class Results {
 			final double transitionProbability = tracker
 					.getTransitionProbability(from, to);
 
-			System.out.println("La probabilidad de ir de " + from + " a " + to
-					+ " es de " + transitionProbability);
+			logger.info("La probabilidad de ir de {} a {} es de "
+					+ transitionProbability, from, to);
 		} catch (final NonExistentTransition ex) {
-			System.out.println("No hay ocurrencias de probabilidades desde "
-					+ from + " a " + to);
+			logger.info("No hay ocurrencias de probabilidades desde {} a {}",
+					from, to);
 		}
 	}
 }

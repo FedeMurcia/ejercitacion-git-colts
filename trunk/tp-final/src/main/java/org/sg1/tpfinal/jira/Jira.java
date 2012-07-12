@@ -10,6 +10,8 @@ import org.sg1.tpfinal.model.Sg1Issue;
 import org.sg1.tpfinal.model.State;
 import org.sg1.tpfinal.model.Tracker;
 import org.sg1.tpfinal.model.Transition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atlassian.jira.rest.client.AuthenticationHandler;
 import com.atlassian.jira.rest.client.JiraRestClient;
@@ -22,14 +24,16 @@ import com.atlassian.jira.rest.client.internal.jersey.JerseyJiraRestClientFactor
 
 public class Jira {
 
+	private static final Logger logger = LoggerFactory.getLogger(Jira.class);
+
 	private static final String NULL_REPORTER_USER = null;
 	private static final String NULL_ASSIGNEE_USER = null;
 
 	private static final String REFLEXIVE_STATE_QUERY = "status WAS \"%s\" ON \"%s\" AND project = \"%s\" AND NOT (status CHANGED ON \"%s\")";
 	private static final String FROM_STATE_TO_STATE_QUERY = "status CHANGED FROM \"%s\" TO \"%s\" ON \"%s\" AND project = \"%s\"";
 
-	// ProgressMonitor todavía es un objeto que no tiene mucho sentido en
-	// esta versión de la API
+	// ProgressMonitor todavï¿½a es un objeto que no tiene mucho sentido en
+	// esta versiï¿½n de la API
 	private static final NullProgressMonitor PROGRESS_MONITOR = new NullProgressMonitor();
 
 	// Creamos factory de cliente REST JIRA
@@ -54,7 +58,7 @@ public class Jira {
 		// For each day
 		do {
 			final Date on = calendar.getTime();
-			System.out.println("Inspeccionado día " + on);
+			logger.debug("Inspeccionado dia " + on);
 
 			// For each origin state
 			for (final State fromState : State.values())
@@ -81,7 +85,7 @@ public class Jira {
 			final String projectId, final State fromState, final State toState,
 			final Date on) {
 
-		System.out.println("Estado " + fromState + " a " + toState);
+		logger.debug("Estado " + fromState + " a " + toState);
 
 		final SearchResult searchResult = restClient.getSearchClient()
 				.searchJql(buildQuery(projectId, on, fromState, toState),
@@ -167,7 +171,7 @@ public class Jira {
 	/**
 	 * Query para el NO cambio de estado, o sea que se mantiene en el mismo
 	 * estado.
-	 *
+	 * 
 	 * @param projectId
 	 * @param date
 	 * @param state

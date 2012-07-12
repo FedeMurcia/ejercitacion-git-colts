@@ -33,15 +33,26 @@ public class QueryMain {
 	public static void main(final String... args) throws URISyntaxException,
 			FileNotFoundException {
 		initializeDates();
+		runTracker();
+	}
 
+	protected static void runTracker() throws URISyntaxException,
+			FileNotFoundException {
+		final Tracker tracker = createTracker();
+		persistTracker(tracker);
+		printResults(tracker);
+	}
+
+	protected static Tracker createTracker() throws URISyntaxException {
 		final Jira jira = new Jira();
 		jira.connect(createAuthenticationHandler(), new URI(JIRA_SERVER_URI));
 
 		final Tracker tracker = jira.createTracker(PROJECT_ID, FROM_DATE,
 				TO_DATE);
+		return tracker;
+	}
 
-		persistTracker(tracker);
-
+	protected static void printResults(final Tracker tracker) {
 		new Results(tracker).printResults();
 	}
 
