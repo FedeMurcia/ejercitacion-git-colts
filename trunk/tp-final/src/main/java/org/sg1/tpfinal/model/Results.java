@@ -15,11 +15,16 @@ public class Results {
 			for (final State to : State.values())
 				printTransitionProbability(tracker, from, to);
 
+		// Print issues count
 		System.out.println("Total issues: " + tracker.getIssuesCount());
+
+		// Print transitions count
 		System.out.println("Total transiciones: "
 				+ tracker.getAllTranstitionsCount());
 
+		// For each state
 		for (final State from : State.values())
+			// Print the number of transitions from the state
 			System.out.println("Total transiciones desde " + from + ": "
 					+ tracker.getTransitionsFromCount(from));
 	}
@@ -27,8 +32,8 @@ public class Results {
 	private void printTransitionProbability(final Tracker tracker,
 			final State from, final State to) {
 		try {
-			final double transitionProbability = tracker.transitionProbability(
-					from, to);
+			final double transitionProbability = tracker
+					.getTransitionProbability(from, to);
 
 			System.out.println("La probabilidad de ir de " + from + " a " + to
 					+ " es de " + transitionProbability);

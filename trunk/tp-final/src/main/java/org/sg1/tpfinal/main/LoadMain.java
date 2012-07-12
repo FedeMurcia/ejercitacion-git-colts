@@ -17,8 +17,7 @@ public class LoadMain {
 	}
 
 	private static Tracker loadTracker() throws FileNotFoundException {
-		final Tracker tracker = (Tracker) new XStream()
-				.fromXML(new FileInputStream(QueryMain.FILE_PATH));
-		return tracker;
+		return (Tracker) new XStream().fromXML(new FileInputStream(
+				QueryMain.FILE_PATH));
 	}
 }

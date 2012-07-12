@@ -14,23 +14,13 @@ public class Tracker implements Serializable {
 
 	private final Collection<Sg1Issue> issues = new HashSet<Sg1Issue>();
 
-	public void addIssue(final Sg1Issue issue) {
-		issues.add(issue);
-	}
-
-	public double transitionProbability(final State from, final State to) {
-		final int countTransitionsFrom = getTransitionsFromCount(from);
-
-		if (countTransitionsFrom == 0)
-			throw new NonExistentTransition(this, from, to);
-
-		return (double) getCountTransitionsFromTo(from, to)
-				/ (double) countTransitionsFrom;
-	}
-
 	/* ***************************************** */
 	/* ********* Issues ************************ */
 	/* ***************************************** */
+
+	public void addIssue(final Sg1Issue issue) {
+		issues.add(issue);
+	}
 
 	public boolean hasIssue(final String issueKey) {
 		try {
@@ -53,32 +43,37 @@ public class Tracker implements Serializable {
 		throw new RuntimeException("no existe el issue con key: " + issueKey);
 	}
 
+	public int getIssuesCount() {
+		return issues.size();
+	}
+
 	/* ***************************************** */
 	/* ********* Transitions ******************* */
 	/* ***************************************** */
+
+	public double getTransitionProbability(final State from, final State to) {
+		final int countTransitionsFrom = getTransitionsFromCount(from);
+
+		if (countTransitionsFrom == 0)
+			throw new NonExistentTransition(this, from, to);
+
+		return (double) getTransitionsFromToCount(from, to)
+				/ (double) countTransitionsFrom;
+	}
 
 	public int getTransitionsFromCount(final State from) {
 		return getAllTransitionsFrom(from).size();
 	}
 
-	private int getCountTransitionsFromTo(final State from, final State to) {
+	public int getTransitionsFromToCount(final State from, final State to) {
 		return getAllTransitionsFromTo(from, to).size();
 	}
 
-	private Collection<Transition> getAllTransitionsFrom(final State from) {
+	public Collection<Transition> getAllTransitionsFrom(final State from) {
 		return Collections2.filter(getAllTransitions(), transitionFrom(from));
 	}
 
-	private Predicate<Transition> transitionFrom(final State from) {
-		return new Predicate<Transition>() {
-			@Override
-			public boolean apply(final Transition input) {
-				return from.equals(input.getFromState());
-			}
-		};
-	}
-
-	private Collection<Transition> getAllTransitionsFromTo( //
+	public Collection<Transition> getAllTransitionsFromTo( //
 			final State from, //
 			final State to) {
 
@@ -86,7 +81,7 @@ public class Tracker implements Serializable {
 				Predicates.equalTo(new Transition(from, to)));
 	}
 
-	private Collection<Transition> getAllTransitions() {
+	public Collection<Transition> getAllTransitions() {
 		final Collection<Transition> transitions = new LinkedList<Transition>();
 
 		for (final Sg1Issue issue : issues)
@@ -99,8 +94,12 @@ public class Tracker implements Serializable {
 		return getAllTransitions().size();
 	}
 
-	public int getIssuesCount() {
-		return issues.size();
+	private Predicate<Transition> transitionFrom(final State from) {
+		return new Predicate<Transition>() {
+			@Override
+			public boolean apply(final Transition input) {
+				return from.equals(input.getFromState());
+			}
+		};
 	}
-
 }

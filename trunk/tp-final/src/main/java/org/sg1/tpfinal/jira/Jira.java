@@ -57,44 +57,17 @@ public class Jira {
 			System.out.println("Inspeccionado día " + on);
 
 			// For each origin state
-			for (final State fromState : State.values()) {
+			for (final State fromState : State.values())
 
 				// For each end state
-				for (final State toState : State.values()) {
-					System.out.println("Estado " + fromState + " a " + toState);
-
-					final SearchResult searchResult = restClient
-							.getSearchClient().searchJql(
-									buildQuery(projectId, on, fromState,
-											toState), PROGRESS_MONITOR);
+				for (final State toState : State.values())
 
 					// For each issue
-					for (final BasicIssue basicIssue : searchResult.getIssues()) {
+					for (final BasicIssue basicIssue : queryIssuesWithTransitionsFromToOn(
+							projectId, fromState, toState, on))
 
-						final String issueKey = basicIssue.getKey();
-
-						if (!tracker.hasIssue(issueKey)) {
-							final Issue issue = restClient.getIssueClient()
-									.getIssue(issueKey, PROGRESS_MONITOR);
-
-							final String asignee = getAssignee(issue);
-							final String reporter = getReporter(issue);
-
-							final Sg1Issue newIssue = new Sg1Issue(issueKey,
-									asignee, reporter);
-
-							tracker.addIssue(newIssue);
-						}
-
-						final Sg1Issue issue = tracker.findIssue(issueKey);
-
-						issue.addTransition(new Transition(fromState, toState));
-
-					} // for each issue
-
-				} // for each end state
-
-			} // for each origin state
+						mapIssueAndTransition(tracker, fromState, toState,
+								basicIssue);
 
 			// Increment day
 			calendar.add(Calendar.DAY_OF_YEAR, 1);
@@ -103,6 +76,56 @@ public class Jira {
 
 		return tracker;
 	}
+
+	private Iterable<BasicIssue> queryIssuesWithTransitionsFromToOn(
+			final String projectId, final State fromState, final State toState,
+			final Date on) {
+
+		System.out.println("Estado " + fromState + " a " + toState);
+
+		final SearchResult searchResult = restClient.getSearchClient()
+				.searchJql(buildQuery(projectId, on, fromState, toState),
+						PROGRESS_MONITOR);
+
+		return searchResult.getIssues();
+	}
+
+	private void mapIssueAndTransition( //
+			final Tracker tracker, //
+			final State fromState, //
+			final State toState, //
+			final BasicIssue basicIssue) {
+
+		final String issueKey = basicIssue.getKey();
+
+		ensureTrackerHasIssue(tracker, issueKey);
+
+		final Sg1Issue issue = tracker.findIssue(issueKey);
+
+		issue.addTransition(new Transition(fromState, toState));
+	}
+
+	private void ensureTrackerHasIssue( //
+			final Tracker tracker, //
+			final String issueKey) {
+
+		if (!tracker.hasIssue(issueKey))
+			tracker.addIssue(createIssue(issueKey));
+	}
+
+	private Sg1Issue createIssue(final String issueKey) {
+		final Issue issue = restClient.getIssueClient().getIssue(issueKey,
+				PROGRESS_MONITOR);
+
+		final String asignee = getAssignee(issue);
+		final String reporter = getReporter(issue);
+
+		return new Sg1Issue(issueKey, asignee, reporter);
+	}
+
+	/* ***************************************** */
+	/* ********* Jira Issues ******************* */
+	/* ***************************************** */
 
 	private String getReporter(final Issue issue) {
 		final BasicUser reporterUser = issue.getReporter();
@@ -119,6 +142,10 @@ public class Jira {
 				.getDisplayName() : NULL_ASSIGNEE_USER;
 		return asignee;
 	}
+
+	/* ***************************************** */
+	/* ********* Queries *********************** */
+	/* ***************************************** */
 
 	private String buildQuery(final String projectId, final Date date,
 			final State from, final State to) {
@@ -155,6 +182,10 @@ public class Jira {
 				projectId, // project
 				formatDate(date)); // date (again)
 	}
+
+	/* ***************************************** */
+	/* ********* Date format ******************* */
+	/* ***************************************** */
 
 	private String formatDate(final Date date) {
 		final Calendar calendar = Calendar.getInstance();
