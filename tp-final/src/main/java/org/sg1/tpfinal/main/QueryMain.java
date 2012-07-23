@@ -22,10 +22,10 @@ public class QueryMain {
 
 	private static final String PROJECT_ID = "MULE";
 
-	private static final String FROM_DATE_STRING = "01/01/2011";
+	private static final String FROM_DATE_STRING = "01/01/2012";
 	private static final String TO_DATE_STRING = "11/07/2012";
 
-	public static final String FILE_PATH = "issues-20110101a20120711.xml";
+	public static final String FILE_PATH = "issues-20120101a20120711.xml";
 
 	private static Date FROM_DATE;
 	private static Date TO_DATE;
