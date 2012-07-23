@@ -39,8 +39,11 @@ public class Results {
 			final double transitionProbability = tracker
 					.getTransitionProbability(from, to);
 
-			logger.info("La probabilidad de ir de {} a {} es de {}",
-					new Object[] { from, to, transitionProbability });
+			logger.info(String.format(
+					"La probabilidad de ir de %s a %s es de %.3f",
+					from.toString(), to.toString(), transitionProbability));
+			// logger.info("La probabilidad de ir de {} a {} es de {}",
+			// new Object[] { from, to, transitionProbability });
 		} catch (final NonExistentTransition ex) {
 			logger.info("No hay ocurrencias de probabilidades desde {} a {}",
 					from, to);

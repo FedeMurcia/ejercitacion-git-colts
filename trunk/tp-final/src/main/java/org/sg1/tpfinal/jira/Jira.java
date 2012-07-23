@@ -3,8 +3,11 @@ package org.sg1.tpfinal.jira;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import javax.ws.rs.WebApplicationException;
 
 import org.sg1.tpfinal.model.Sg1Issue;
 import org.sg1.tpfinal.model.State;
@@ -32,8 +35,8 @@ public class Jira {
 	private static final String REFLEXIVE_STATE_QUERY = "status WAS \"%s\" ON \"%s\" AND project = \"%s\" AND NOT (status CHANGED ON \"%s\")";
 	private static final String FROM_STATE_TO_STATE_QUERY = "status CHANGED FROM \"%s\" TO \"%s\" ON \"%s\" AND project = \"%s\"";
 
-	// ProgressMonitor todav�a es un objeto que no tiene mucho sentido en
-	// esta versi�n de la API
+	// ProgressMonitor todavía es un objeto que no tiene mucho sentido en
+	// esta versión de la API
 	private static final NullProgressMonitor PROGRESS_MONITOR = new NullProgressMonitor();
 
 	// Creamos factory de cliente REST JIRA
@@ -58,7 +61,7 @@ public class Jira {
 		// For each day
 		do {
 			final Date on = calendar.getTime();
-			logger.debug("Inspeccionado dia " + on);
+			logger.info("Inspeccionado dia " + on);
 
 			// For each origin state
 			for (final State fromState : State.values())
@@ -85,13 +88,22 @@ public class Jira {
 			final String projectId, final State fromState, final State toState,
 			final Date on) {
 
-		logger.debug("Estado " + fromState + " a " + toState);
+		logger.info("Estado " + fromState + " a " + toState);
 
-		final SearchResult searchResult = restClient.getSearchClient()
-				.searchJql(buildQuery(projectId, on, fromState, toState),
-						PROGRESS_MONITOR);
+		SearchResult searchResult;
+		try {
+			searchResult = restClient.getSearchClient().searchJql(
+					buildQuery(projectId, on, fromState, toState),
+					PROGRESS_MONITOR);
 
-		return searchResult.getIssues();
+			return searchResult.getIssues();
+
+		} catch (final WebApplicationException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		// En caso de error, colleccion vacia
+		return Collections.emptyList();
 	}
 
 	private void mapIssueAndTransition( //
@@ -171,7 +183,7 @@ public class Jira {
 	/**
 	 * Query para el NO cambio de estado, o sea que se mantiene en el mismo
 	 * estado.
-	 * 
+	 *
 	 * @param projectId
 	 * @param date
 	 * @param state
